@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Dilwarahmed2425/devops-project-1'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t devops-fresh-app .'
@@ -20,7 +14,10 @@ pipeline {
                 sh '''
                 docker stop devops-fresh-container || true
                 docker rm devops-fresh-container || true
-                docker run -d -p 8081:80 --name devops-fresh-container devops-fresh-app
+
+                docker run -d -p 8081:80 \
+                --name devops-fresh-container \
+                devops-fresh-app
                 '''
             }
         }
